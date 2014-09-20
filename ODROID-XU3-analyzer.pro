@@ -13,8 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        analyzerwindow.cpp
+        analyzerwindow.cpp \
+    takevalue.cpp
 
-HEADERS  += analyzerwindow.h
+HEADERS  += analyzerwindow.h \
+    takevalue.h
 
 FORMS    += analyzerwindow.ui
