@@ -8,11 +8,11 @@
 #include <QDebug>
 Takevalue::Takevalue()
 {
-    //usage[8] = {0,};
+    usage[8] = {0,};
     for (int i = 0; i < 8; i++)
     {
         QString temp;
-        temp.sprintf("/sys/devices/system/cpu/cpu%d/cpufreq/cpuinfo_cur_freq", i);
+        temp.sprintf("../ODROID-XU3-parallel-process-analysis/testdir/sys/devices/system/cpu/cpu%d/cpufreq/cpuinfo_cur_freq", i);
         cpu_node_list[i] = temp;
     }
 }

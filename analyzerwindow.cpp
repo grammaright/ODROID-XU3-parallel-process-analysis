@@ -191,8 +191,9 @@ void analyzerwindow::float2string()//값을 출력한다.
 }
 void analyzerwindow::displayCpuFrequency()
 {
+    QString temp = takevalue->GetCPUCurFreq(0);
     ui->GPUFreqEdit->setText(takevalue->GetGPUCurFreq());
-    ui->CPU0FreqEdit->setText(takevalue->GetCPUCurFreq(0));
+    ui->CPU0FreqEdit->setText(temp);
     ui->CPU1FreqEdit->setText(takevalue->GetCPUCurFreq(1));
     ui->CPU2FreqEdit->setText(takevalue->GetCPUCurFreq(2));
     ui->CPU3FreqEdit->setText(takevalue->GetCPUCurFreq(3));
