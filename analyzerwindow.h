@@ -23,11 +23,13 @@ explicit analyzerwindow(QWidget *parent = 0);
 private:
 Ui::analyzerWindow *ui;
 Takevalue *takevalue;
-/*QwtPlotCurve *ARMSensorCurve;//여러곡선들을 표현하기위해QwtPlotCurve로지정해준다.
+/*
+QwtPlotCurve *ARMSensorCurve;//여러곡선들을 표현하기위해QwtPlotCurve로지정해준다.
 QwtPlotCurve *MEMSensorCurve;
 QwtPlotCurve *KFCSensorCurve;
 QwtPlotCurve *G3DSensorCurve;
-QwtPlot *qwtPlotSensor;*/
+QwtPlot *qwtPlotSensor;
+*/
 plotdata armPlotData;//센세들에게서 데이터들을받아오기위해 선언한다.
 plotdata memPlotData;
 plotdata kfcPlotData;

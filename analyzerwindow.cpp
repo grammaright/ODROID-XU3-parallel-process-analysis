@@ -26,19 +26,26 @@ ui(new Ui::analyzerWindow)
         a7Volt = a7Ampere = a7Watt = "";
         gpuVolt = gpuAmpere = gpuWatt = "";
         memVolt = memAmpere = memWatt = "";
-       /* ARMSensorCurve = new QwtPlotCurve();
+        /*
+        ARMSensorCurve = new QwtPlotCurve();
         MEMSensorCurve = new QwtPlotCurve();
         KFCSensorCurve = new QwtPlotCurve();
-        G3DSensorCurve = new QwtPlotCurve();*/
-       // displaySensorPlot();
+        G3DSensorCurve = new QwtPlotCurve();
+
+        ui->
+        displaySensorPlot();
+        */
+        ui->qwtPlotSensor->addGraph();
 }
 analyzerwindow::~analyzerwindow()//소멸자로 동적할당 딜렉트
 {
     takevalue->CloseINA231();
     delete ui;
 }
-/*void analyzerwindow::displaySensorPlot()//그래프선색,x축 y축
+void analyzerwindow::displaySensorPlot()//그래프선색,x축 y축
 {
+
+    /*
     ui->qwtPlotSensor->setAxisScale(QwtPlot::yLeft, 0, 5);
     ui->qwtPlotSensor->setAxisScale(QwtPlot::xBottom, 0, 100);
     ui->qwtPlotSensor->setAxisTitle(QwtPlot::xBottom, "sec");
@@ -53,9 +60,11 @@ analyzerwindow::~analyzerwindow()//소멸자로 동적할당 딜렉트
     KFCSensorCurve->setPen(QColor(0, 255, 0));
     G3DSensorCurve->attach(ui->qwtPlotSensor);
     G3DSensorCurve->setPen(QColor(200, 160, 50));
-}*/
-/*void analyzerwindow::drawARMSensorCurve()//그래프그리기
+    */
+}
+void analyzerwindow::drawARMSensorCurve()//그래프그리기
 {
+    /*
     if (getNode->armuW > 0 && getNode->armuW < 10)
     {
         if (armPlotData.index < 99)
@@ -75,9 +84,16 @@ analyzerwindow::~analyzerwindow()//소멸자로 동적할당 딜렉트
         }
     ARMSensorCurve->setSamples(armPlotData.xData, armPlotData.yData, armPlotData.index);
     ui->qwtPlotSensor->replot();
-}*/
-/*void analyzerwindow::drawMEMSensorCurve()
+    */
+}
+void analyzerwindow::drawMEMSensorCurve()
 {
+    QVector<double> x, y;
+    y.append(takevalue->memuW);
+    x.append(memPlotData.index);
+    ui->qwtPlotSensor->graph(0)->addData(x, y);
+    ui->qwtPlotSensor->replot();
+    /*
     if (getNode->memuW > 0 && getNode->memuW < 10)
     {
         if (memPlotData.index < 99)
@@ -97,9 +113,11 @@ analyzerwindow::~analyzerwindow()//소멸자로 동적할당 딜렉트
     }
     MEMSensorCurve->setSamples(memPlotData.xData, memPlotData.yData, memPlotData.index);
     ui->qwtPlotSensor->replot();
+    */
 }
 void analyzerwindow::drawKFCSensorCurve()
 {
+    /*
     if (getNode->kfcuW > 0 && getNode->kfcuW < 10)
     {
         if (kfcPlotData.index < 99)
@@ -121,9 +139,11 @@ void analyzerwindow::drawKFCSensorCurve()
     }
     KFCSensorCurve->setSamples(kfcPlotData.xData, kfcPlotData.yData, kfcPlotData.index);
     ui->qwtPlotSensor->replot();
+    */
 }
 void analyzerwindow::drawG3DSensorCurve()
 {
+    /*
     if (getNode->g3duW > 0 && getNode->g3duW < 10)
     {
         if (g3dPlotData.index < 99)
@@ -143,7 +163,8 @@ void analyzerwindow::drawG3DSensorCurve()
     }
     G3DSensorCurve->setSamples(g3dPlotData.xData, g3dPlotData.yData, g3dPlotData.index);
     ui->qwtPlotSensor->replot();
-}*/
+    */
+}
 
 void analyzerwindow::DisplaySensor()//cpu값넣는 곳세팅
 {
@@ -211,10 +232,10 @@ void analyzerwindow::update()//업데이트
 {
     displayCpuFrequency();
     DisplaySensor();
-    //drawARMSensorCurve();
-    //drawMEMSensorCurve();
-    //drawKFCSensorCurve();
-    //drawG3DSensorCurve();
+    drawARMSensorCurve();
+    drawMEMSensorCurve();
+    drawKFCSensorCurve();
+    drawG3DSensorCurve();
     displayCpuUsage();
 }
 

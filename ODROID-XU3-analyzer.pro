@@ -14,9 +14,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         analyzerwindow.cpp \
-    takevalue.cpp
+    takevalue.cpp \
+    qcustomplot.cpp
 
 HEADERS  += analyzerwindow.h \
-    takevalue.h
+    takevalue.h \
+    qcustomplot.h
 
 FORMS    += analyzerwindow.ui
+
+QT += printsupport
