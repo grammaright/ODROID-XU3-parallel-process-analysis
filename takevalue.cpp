@@ -159,3 +159,51 @@ void Takevalue::close_sensor(sensor_t *sensor)
     if (sensor->fd > 0)
     close(sensor->fd);
 }
+int Takevalue::calUsage(int cpu_idx, int user, int nice, int system, int idle)
+{
+    long total = 0;
+    long usage = 0;
+    int diff_user, diff_system, diff_idle;
+    diff_user = mOldUserCPU[cpu_idx] - user;
+    diff_system = mOldSystemCPU[cpu_idx] - system;
+    diff_idle = mOldIdleCPU[cpu_idx] - idle;
+    total = diff_user + diff_system + diff_idle;
+    if (total != 0)
+        usage = diff_user * 100 / total;
+    mOldUserCPU[cpu_idx] =user;
+    mOldSystemCPU[cpu_idx] = system;
+    mOldIdleCPU[cpu_idx] = idle;
+    return usage;
+}
+int Takevalue::GetCPUUsage(void)
+{
+    char buf[80] = {0,};
+    char cpuid[8] = "cpu";
+    int findCPU = 0;
+    int user, system, nice, idle;
+    FILE *fp;
+    int cpu_index = 0;
+    fp = fopen("/proc/stat", "r");
+    if (fp == NULL)
+        return 0;
+    while (fgets(buf, 80, fp))
+    {
+        char temp[4] = "cpu";
+        temp[3] = '0' + cpu_index;
+        if (!strncmp(buf, temp, 4))
+        {
+            findCPU = 1;
+            sscanf(buf, "%s %d %d %d %d",cpuid, &user, &nice, &system, &idle);
+            usage[cpu_index] = calUsage(cpu_index, user, nice, system, idle);
+            cpu_index++;
+        }
+        if (!strncmp(buf, "intr", 4))
+        break;
+        if (findCPU == 0)
+        mOldUserCPU[cpu_index] = mOldSystemCPU[cpu_index] = mOldIdleCPU[cpu_index] = 0;
+        else
+        findCPU = 0;
+    }
+    fclose(fp);
+    return 0;
+}

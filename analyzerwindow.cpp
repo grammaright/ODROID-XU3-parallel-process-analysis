@@ -214,4 +214,19 @@ void analyzerwindow::update()//업데이트
     //drawMEMSensorCurve();
     //drawKFCSensorCurve();
     //drawG3DSensorCurve();
+    displayCpuUsage();
 }
+
+void analyzerwindow::displayCpuUsage()
+{
+    takevalue->GetCPUUsage();
+    ui->CPU0UsageEdit->setText(QString::number(takevalue->usage[0]));
+    ui->CPU1UsageEdit->setText(QString::number(takevalue->usage[1]));
+    ui->CPU2UsageEdit->setText(QString::number(takevalue->usage[2]));
+    ui->CPU3UsageEdit->setText(QString::number(takevalue->usage[3]));
+    ui->CPU4UsageEdit->setText(QString::number(takevalue->usage[4]));
+    ui->CPU5UsageEdit->setText(QString::number(takevalue->usage[5]));
+    ui->CPU6UsageEdit->setText(QString::number(takevalue->usage[6]));
+    ui->CPU7UsageEdit->setText(QString::number(takevalue->usage[7]));
+}
+
