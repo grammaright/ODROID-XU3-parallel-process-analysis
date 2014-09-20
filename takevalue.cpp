@@ -12,7 +12,11 @@ Takevalue::Takevalue()
     for (int i = 0; i < 8; i++)
     {
         QString temp;
+#ifdef QT_DEBUG
         temp.sprintf("../ODROID-XU3-parallel-process-analysis/testdir/sys/devices/system/cpu/cpu%d/cpufreq/cpuinfo_cur_freq", i);
+#else
+        temp.sprintf("/sys/devices/system/cpu/cpu%d/cpufreq/cpuinfo_cur_freq", i);
+#endif
         cpu_node_list[i] = temp;
     }
 }

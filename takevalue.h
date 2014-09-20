@@ -4,8 +4,13 @@
 #include <QWidget>
 #include <QFile>
 #include <sys/ioctl.h>
+#ifdef QT_DEBUG
 #define GPUFREQ_NODE "../ODROID-XU3-parallel-process-analysis/testdir/sys/devices/11800000.mali/clock"
 #define TEMP_NODE "../ODROID-XU3-parallel-process-analysis/testdir/sys/devices/10060000.tmu/temp"
+#else
+#define GPUFREQ_NODE "/sys/devices/11800000.mali/clock"
+#define TEMP_NODE "/sys/devices/10060000.tmu/temp"
+#endif
 typedef struct ina231_iocreg__t {
 char name[20];
 unsigned int enable;
