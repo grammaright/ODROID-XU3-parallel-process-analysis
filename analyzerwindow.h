@@ -11,6 +11,7 @@ class analyzerWindow;
 typedef struct plotdata {//이름없는 구조체로 typedef 를써주고,
 double xData[100];//그래프의x좌표와y좌표
 double yData[100];
+
 int index;
 float Watt;
 } plotdata;
@@ -23,6 +24,7 @@ explicit analyzerwindow(QWidget *parent = 0);
 private:
 Ui::analyzerWindow *ui;
 Takevalue *takevalue;
+QVector<double> x[3], y[3];
 /*
 QwtPlotCurve *ARMSensorCurve;//여러곡선들을 표현하기위해QwtPlotCurve로지정해준다.
 QwtPlotCurve *MEMSensorCurve;

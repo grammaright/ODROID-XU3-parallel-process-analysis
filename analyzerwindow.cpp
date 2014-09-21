@@ -35,7 +35,7 @@ ui(new Ui::analyzerWindow)
         ui->
         displaySensorPlot();
         */
-        ui->qwtPlotSensor->addGraph();
+        displaySensorPlot();
 }
 analyzerwindow::~analyzerwindow()//소멸자로 동적할당 딜렉트
 {
@@ -44,23 +44,14 @@ analyzerwindow::~analyzerwindow()//소멸자로 동적할당 딜렉트
 }
 void analyzerwindow::displaySensorPlot()//그래프선색,x축 y축
 {
+    ui->qwtPlotSensor->addGraph();
+    ui->qwtPlotSensor->addGraph();
+    ui->qwtPlotSensor->addGraph();
+    ui->qwtPlotSensor->xAxis->setRange(0.f,100.f);
+    ui->qwtPlotSensor->yAxis->setRange(0.f,2.f);
+    ui->qwtPlotSensor->graph(2)->setPen(QPen(Qt::red));
+    ui->qwtPlotSensor->graph(1)->setPen(QPen(Qt::green));
 
-    /*
-    ui->qwtPlotSensor->setAxisScale(QwtPlot::yLeft, 0, 5);
-    ui->qwtPlotSensor->setAxisScale(QwtPlot::xBottom, 0, 100);
-    ui->qwtPlotSensor->setAxisTitle(QwtPlot::xBottom, "sec");
-    ui->qwtPlotSensor->setAxisTitle(QwtPlot::yLeft, "Watt");
-    ui->qwtPlotSensor->setCanvasBackground(QBrush(QColor(0, 0, 0)));
-    ui->qwtPlotSensor->setTitle("Watt Graph");
-    ARMSensorCurve->attach(ui->qwtPlotSensor);//색을 넣어줌
-    ARMSensorCurve->setPen(QColor(50, 160, 140));
-    MEMSensorCurve->attach(ui->qwtPlotSensor);
-    MEMSensorCurve->setPen(QColor(255, 0, 0));
-    KFCSensorCurve->attach(ui->qwtPlotSensor);
-    KFCSensorCurve->setPen(QColor(0, 255, 0));
-    G3DSensorCurve->attach(ui->qwtPlotSensor);
-    G3DSensorCurve->setPen(QColor(200, 160, 50));
-    */
 }
 void analyzerwindow::drawARMSensorCurve()//그래프그리기
 {
@@ -88,82 +79,73 @@ void analyzerwindow::drawARMSensorCurve()//그래프그리기
 }
 void analyzerwindow::drawMEMSensorCurve()
 {
-    QVector<double> x, y;
-    y.append(takevalue->memuW);
-    x.append(memPlotData.index);
-    ui->qwtPlotSensor->graph(0)->addData(x, y);
-    ui->qwtPlotSensor->replot();
-    /*
-    if (getNode->memuW > 0 && getNode->memuW < 10)
+
+
+
+    if (takevalue->memuW > 0 && takevalue->memuW < 10)
     {
         if (memPlotData.index < 99)
         {
-            memPlotData.yData[memPlotData.index] = getNode->memuW;
-            memPlotData.xData[memPlotData.index] = memPlotData.index;
+            y[0].append(takevalue->memuW*5);
+            x[0].append(memPlotData.index);
             memPlotData.index++;
         }
         else
         {
-            memPlotData.yData[99] = getNode->memuW;
+            memPlotData.yData[99] = takevalue->memuW;
             for (int i = 0; i < 100; i++)
             {
                 memPlotData.yData[i] = memPlotData.yData[i + 1];
             }
         }
     }
-    MEMSensorCurve->setSamples(memPlotData.xData, memPlotData.yData, memPlotData.index);
+    ui->qwtPlotSensor->graph(0)->setData(x[0], y[0]);
     ui->qwtPlotSensor->replot();
-    */
+
 }
 void analyzerwindow::drawKFCSensorCurve()
 {
-    /*
-    if (getNode->kfcuW > 0 && getNode->kfcuW < 10)
+    if (takevalue->memuA > 0 && takevalue->memuA < 10)
     {
         if (kfcPlotData.index < 99)
         {
-            kfcPlotData.yData[kfcPlotData.index] = getNode->kfcuW;
-            ui->ARMuVlcd->display(a15Volt);
-            ui->ARMuWlcd->display(a15Watt);
-            kfcPlotData.xData[kfcPlotData.index] = kfcPlotData.index;
+            y[1].append(takevalue->memuA);
+            x[1].append(kfcPlotData.index);
             kfcPlotData.index++;
         }
         else
         {
-            kfcPlotData.yData[99] = getNode->kfcuW;
+            kfcPlotData.yData[99] = takevalue->memuW;
             for (int i = 0; i < 100; i++)
             {
                 kfcPlotData.yData[i] = kfcPlotData.yData[i + 1];
             }
         }
     }
-    KFCSensorCurve->setSamples(kfcPlotData.xData, kfcPlotData.yData, kfcPlotData.index);
+    ui->qwtPlotSensor->graph(1)->setData(x[1], y[1]);
     ui->qwtPlotSensor->replot();
-    */
 }
 void analyzerwindow::drawG3DSensorCurve()
 {
-    /*
-    if (getNode->g3duW > 0 && getNode->g3duW < 10)
+    if (takevalue->memuV > 0 && takevalue->memuV < 10)
     {
         if (g3dPlotData.index < 99)
         {
-            g3dPlotData.yData[g3dPlotData.index] = getNode->g3duW;
-            g3dPlotData.xData[g3dPlotData.index] = g3dPlotData.index;
+            y[2].append(takevalue->memuV);
+            x[2].append(g3dPlotData.index);
             g3dPlotData.index++;
         }
         else
         {
-            g3dPlotData.yData[99] = getNode->g3duW;
+            g3dPlotData.yData[99] = takevalue->memuV;
             for (int i = 0; i < 100; i++)
             {
                 g3dPlotData.yData[i] = g3dPlotData.yData[i + 1];
             }
         }
     }
-    G3DSensorCurve->setSamples(g3dPlotData.xData, g3dPlotData.yData, g3dPlotData.index);
+    ui->qwtPlotSensor->graph(2)->setData(x[2], y[2]);
     ui->qwtPlotSensor->replot();
-    */
 }
 
 void analyzerwindow::DisplaySensor()//cpu값넣는 곳세팅
