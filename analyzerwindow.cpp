@@ -79,25 +79,14 @@ void analyzerwindow::drawARMSensorCurve()//그래프그리기
 }
 void analyzerwindow::drawMEMSensorCurve()
 {
-
-
-
     if (takevalue->memuW > 0 && takevalue->memuW < 10)
     {
-        if (memPlotData.index < 99)
-        {
-            y[0].append(takevalue->memuW*5);
-            x[0].append(memPlotData.index);
-            memPlotData.index++;
-        }
-        else
-        {
-            memPlotData.yData[99] = takevalue->memuW;
-            for (int i = 0; i < 100; i++)
-            {
-                memPlotData.yData[i] = memPlotData.yData[i + 1];
-            }
-        }
+            y[0].push_back(takevalue->memuW*5);
+            x[0].push_back(memPlotData.index);
+            if( memPlotData.index > 99 )
+                y[0].pop_front();
+            else
+                memPlotData.index++;
     }
     ui->qwtPlotSensor->graph(0)->setData(x[0], y[0]);
     ui->qwtPlotSensor->replot();
@@ -107,20 +96,12 @@ void analyzerwindow::drawKFCSensorCurve()
 {
     if (takevalue->memuA > 0 && takevalue->memuA < 10)
     {
-        if (kfcPlotData.index < 99)
-        {
-            y[1].append(takevalue->memuA);
-            x[1].append(kfcPlotData.index);
-            kfcPlotData.index++;
-        }
-        else
-        {
-            kfcPlotData.yData[99] = takevalue->memuW;
-            for (int i = 0; i < 100; i++)
-            {
-                kfcPlotData.yData[i] = kfcPlotData.yData[i + 1];
-            }
-        }
+            y[1].push_back(takevalue->memuA);
+            x[1].push_back(kfcPlotData.index);
+            if( kfcPlotData.index > 99 )
+                y[1].pop_front();
+            else
+                kfcPlotData.index++;
     }
     ui->qwtPlotSensor->graph(1)->setData(x[1], y[1]);
     ui->qwtPlotSensor->replot();
@@ -129,20 +110,13 @@ void analyzerwindow::drawG3DSensorCurve()
 {
     if (takevalue->memuV > 0 && takevalue->memuV < 10)
     {
-        if (g3dPlotData.index < 99)
-        {
-            y[2].append(takevalue->memuV);
-            x[2].append(g3dPlotData.index);
-            g3dPlotData.index++;
-        }
-        else
-        {
-            g3dPlotData.yData[99] = takevalue->memuV;
-            for (int i = 0; i < 100; i++)
-            {
-                g3dPlotData.yData[i] = g3dPlotData.yData[i + 1];
-            }
-        }
+            y[2].push_back(takevalue->memuV);
+            x[2].push_back(g3dPlotData.index);
+            if( g3dPlotData.index > 99 )
+                y[2].pop_front();
+            else
+                g3dPlotData.index++;
+
     }
     ui->qwtPlotSensor->graph(2)->setData(x[2], y[2]);
     ui->qwtPlotSensor->replot();
